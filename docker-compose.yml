@@ -1,0 +1,13 @@
+services:
+  usermgt:
+    container_name: usermgtappcontainer
+    build: .
+    image: usermgt:v1
+    ports:
+       - "3000:80"
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge 
