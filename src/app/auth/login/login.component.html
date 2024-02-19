@@ -1,0 +1,32 @@
+<p>login works!</p>
+
+<div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+        <header>Login</header>
+        <!-- <form action="#"> -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <input type="text" placeholder="Enter your email" formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                <div *ngIf="f['email'].errors['required']">Email is required</div>
+                <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+            </div>
+            <input type="password" placeholder="Enter your password" formControlName="password"
+                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+            <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                <span *ngIf="f['password'].errors['required']">Password is required</span>
+            </div>
+            <a href="#">Forgot password?</a>    
+            <button class="button" type="submit">
+                Login
+              </button>
+            <!-- <input type="button" class="button" value="Login"> -->
+        </form>
+        <div class="signup">
+            <span class="signup">Don't have an account?
+                <a routerLink="/register" role="button">Signup</a>
+            </span>
+        </div>
+    </div>
+</div>
