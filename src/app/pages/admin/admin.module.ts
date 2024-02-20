@@ -26,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UserEditComponent } from './table/user-edit/user-edit.component';
+import { UserDeleteComponent } from './table/user-delete/user-delete.component';
 import { UserCreateComponent } from './table/user-create/user-create.component';
 
 
@@ -37,6 +38,7 @@ import { UserCreateComponent } from './table/user-create/user-create.component';
     FormComponent,
     TableComponent,
     UserEditComponent,
+    UserDeleteComponent,
     UserCreateComponent
   ],
   imports: [

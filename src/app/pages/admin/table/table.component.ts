@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { User, userData } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateComponent } from './user-create/user-create.component';  
+import { UserDeleteComponent } from './user-delete/user-delete.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 
 @Component({
@@ -83,5 +84,26 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  openDeleteDialog(selectedUser: userData) {
+    const dialogRef = this.dialog.open(UserDeleteComponent, {
+      width: '300px',
+      data: {user: selectedUser}// Pass the current user for confirmation
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // User confirmed the deletion
+        this.deleteUser(selectedUser); // Proceed with deletion
+      }
+    });
+  }
+
+  deleteUser(userToDelete: userData) {
+    const index = this.allUsers.findIndex(user => user.email === userToDelete.email); // Assuming each user has a unique `id`
+    if (index !== -1) {
+      this.allUsers.splice(index, 1); // Remove the user
+      this.updateTableData(); // Update the displayed data
+    }
+  }
   
 }
