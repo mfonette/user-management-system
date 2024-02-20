@@ -53,5 +53,14 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataSource.data = this.allUsers.slice(startIndex, endIndex);
   }
 
+  openAddUserDialog(): void {
+    const dialogRef = this.dialog.open(UserCreateComponent, { width: '250px' });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.allUsers.push(result); // Simulate adding the user
+        this.updateTableData(); 
+      }
+    });
+  }
   
 }
