@@ -1,4 +1,10 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostBinding, OnInit, Renderer2 } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { OverlayContainer } from '@angular/cdk/overlay';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,20 +13,41 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  theme: string = 'light-theme'; // Default theme
-  constructor(private renderer: Renderer2) { }
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
 
-  ngOnInit(): void {
-    this.setTheme('light-theme'); // Set the initial theme
-  }
+constructor(private breakpointObserver: BreakpointObserver,
+            private overlay: OverlayContainer) {}
 
-  setTheme(theme: string) {
-    this.renderer.setAttribute(document.body, 'class', theme);
-  }
+toggleControl = new FormControl(false);
+@HostBinding('class') className = '';
+darkClassName = 'theme-dark';
+lightClassName = 'theme-light';
 
-  toggleTheme() {
-    console.log('theme');
-    const newTheme = document.body.classList.contains('light-theme') ? 'dark-theme' : 'light-theme';
-    this.setTheme(newTheme);
+ngOnInit() {
+  const storedDarkModeValue = localStorage.getItem('darkMode');
+  const isDarkMode = storedDarkModeValue !== null ? storedDarkModeValue === 'true' : false;
+  // Apply the theme based on the retrieved setting
+  this.applyThemeClass(isDarkMode);
+  this.toggleControl.setValue(isDarkMode);
+  this.toggleControl.valueChanges.subscribe((darkMode: boolean | null) => {
+    const isDarkMode = darkMode === null ? false : darkMode;
+    this.applyThemeClass(isDarkMode);
+    localStorage.setItem('darkMode', isDarkMode ? 'true' : 'false');
+  });
+}
+
+
+applyThemeClass(darkMode: boolean) {
+  this.className = darkMode ? this.darkClassName : this.lightClassName;
+  const overlayContainerClasses = this.overlay.getContainerElement().classList;
+  if(darkMode) {
+    overlayContainerClasses.add(this.darkClassName);
+  } else {
+    overlayContainerClasses.remove(this.darkClassName);
   }
+}
 }

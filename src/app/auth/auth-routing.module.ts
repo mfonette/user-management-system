@@ -19,14 +19,6 @@ const routes: Routes = [
         },
       },
       {
-        path: 'logout',
-        component: LogoutComponent,
-        data: {
-          title: 'Logout',
-          description: 'Description Meta Tag Content',
-        },
-      },
-      {
         path: 'register',
         component: RegisterComponent,
         data: {

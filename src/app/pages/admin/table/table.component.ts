@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '
 import { MatPaginator } from '@angular/material/paginator';
 import {MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/services/user/user.service';
-import { User, userData } from 'src/app/shared/models/user.model';
+import { userData } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateComponent } from './user-create/user-create.component';  
 import { UserDeleteComponent } from './user-delete/user-delete.component';
@@ -16,13 +16,12 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 export class TableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   allUsers: userData[] = []; // Store all users fetched from the server
-  dataSource: MatTableDataSource<userData>;
-  displayedColumns = ['id', 'email', 'first_name', 'last_name', 'avatar', 'actions']; // Adjust based on your data
+  dataSource: any;
+  displayedColumns = ['id', 'email', 'first_name', 'last_name', 'avatar', 'actions']; 
 
   constructor(private userService: UserService,
     public dialog: MatDialog,
     private changeDetectorRef: ChangeDetectorRef ) {
-      this.dataSource = new MatTableDataSource<userData>([]);
    
   }
   ngOnInit(): void {
@@ -30,8 +29,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // (window as any).paginator = this.paginator;
-    this.dataSource.paginator = this.paginator;
   this.paginator.page.subscribe(() => {
     this.updateTableData();
   });
@@ -41,7 +38,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.userService.listAllUsers().subscribe({
       next: (response) => {
         this.allUsers = response;
-        this.paginator.length = this.allUsers.length;
+        this.dataSource = new MatTableDataSource<userData>(this.allUsers)
         this.updateTableData();
         this.changeDetectorRef.detectChanges(); // Ensure changes are detected
       },
@@ -51,8 +48,10 @@ export class TableComponent implements OnInit, AfterViewInit {
   
   updateTableData(): void {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    const endIndex = startIndex + this.paginator.pageSize;
+    const endIndex = Math.min(startIndex + this.paginator.pageSize, this.allUsers.length);
     this.dataSource.data = this.allUsers.slice(startIndex, endIndex);
+    this.paginator.length = this.allUsers.length; 
+
   }
 
   openAddUserDialog(): void {
@@ -92,8 +91,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // User confirmed the deletion
-        this.deleteUser(selectedUser); // Proceed with deletion
+        this.deleteUser(selectedUser);
       }
     });
   }

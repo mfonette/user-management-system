@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { MustMatch } from '../validator.component';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +23,9 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
+    },
+    {
+      validator: MustMatch('password', 'confirmPassword') // Apply custom validator at the formGroup level
     });
   }
 
@@ -30,6 +34,10 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+      return;
+  }
     let payload = {
       username: this.f['email'].value,
       password: this.f['password'].value

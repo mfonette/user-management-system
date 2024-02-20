@@ -3,15 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { AdminTestComponent } from './admin-test/admin-test.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { FormComponent } from './form/form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
@@ -33,9 +30,6 @@ import { UserCreateComponent } from './table/user-create/user-create.component';
 @NgModule({
   declarations: [
     AdminDashboardComponent,
-    AdminTestComponent,
-    SideBarComponent,
-    FormComponent,
     TableComponent,
     UserEditComponent,
     UserDeleteComponent,
