@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Edit User</h2>
+<div mat-dialog-content>
+  <form [formGroup]="editUserForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="first_name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Job</mat-label>
+      <input matInput formControlName="avatar">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="last_name">
+    </mat-form-field>
+    <!-- Additional form fields here -->
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="null">Cancel</button>
+  <button mat-button [mat-dialog-close]="editUserForm.value" cdkFocusInitial>Save</button>
+</div>

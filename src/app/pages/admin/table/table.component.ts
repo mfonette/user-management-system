@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { User, userData } from 'src/app/shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateComponent } from './user-create/user-create.component';  
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @Component({
   selector: 'app-table',
@@ -62,5 +63,25 @@ export class TableComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  
+
+  openEditDialog(selectedUser: userData) {
+    const dialogRef = this.dialog.open(UserEditComponent, {
+      width: '250px',
+      data: selectedUser // Pass the current user data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.allUsers.findIndex(user => user.email === selectedUser.email); // Identify user by a unique attribute
+        if (index !== -1) {
+          this.allUsers[index] = result; // Update the local data source
+          this.updateTableData(); // Refresh the table to reflect changes
+        
+        }
+      }
+    });
+  }
+
   
 }

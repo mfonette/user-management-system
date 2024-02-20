@@ -25,6 +25,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UserEditComponent } from './table/user-edit/user-edit.component';
 import { UserCreateComponent } from './table/user-create/user-create.component';
 
 
@@ -35,6 +36,7 @@ import { UserCreateComponent } from './table/user-create/user-create.component';
     SideBarComponent,
     FormComponent,
     TableComponent,
+    UserEditComponent,
     UserCreateComponent
   ],
   imports: [
