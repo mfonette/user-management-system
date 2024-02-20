@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
+
+    // this.authService.clearAuthToken();
   }
 
   // convenience getter for easy access to form fields
@@ -39,7 +41,6 @@ export class LoginComponent implements OnInit {
     .subscribe({
       next: (response) => {
         // Handle successful login
-        this.authService.setAuthToken((response as AuthSuccessResponse).token);
         console.log('Login successful', (response as AuthSuccessResponse).token);
         this.router.navigate(['/admin']);
         // Redirect the user or update the UI as needed
