@@ -1,12 +1,11 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+  selector: 'app-admin-test',
+  templateUrl: './admin-test.component.html',
+  styleUrls: ['./admin-test.component.scss']
 })
-export class AdminDashboardComponent implements OnInit {
-
+export class AdminTestComponent implements OnInit {
   theme: string = 'light-theme'; // Default theme
   constructor(private renderer: Renderer2) { }
 
@@ -23,4 +22,9 @@ export class AdminDashboardComponent implements OnInit {
     const newTheme = document.body.classList.contains('light-theme') ? 'dark-theme' : 'light-theme';
     this.setTheme(newTheme);
   }
+
+  // toggleTheme() {
+  //   this.theme = this.theme === 'light-theme' ? 'dark-theme' : 'light-theme';
+  // }
+
 }

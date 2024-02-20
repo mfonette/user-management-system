@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Add New User</h2>
+<div mat-dialog-content>
+  <form [formGroup]="userForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="first_name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Job</mat-label>
+        <input matInput formControlName="avatar">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>last Name</mat-label>
+        <input matInput formControlName="last_name">
+      </mat-form-field>
+    <!-- Additional form fields here -->
+  </form>
+</div>
+<!-- Form fields -->
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button mat-button (click)="onSubmit()">Save</button>
+  </div>
+  
